@@ -1,0 +1,44 @@
+.checkbox__label {
+  display: flex;
+  column-gap: 5px;
+
+  margin: 0 0 10px 0;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  & input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    position: relative;
+    display: grid;
+    border: 1px solid #1a1a1a;
+    border-radius: 50px;
+    &::before {
+      content: "";
+      justify-self: center;
+      align-self: center;
+      position: absolute;
+      display: none;
+      width: 10px;
+      height: 10px;
+      background-color: rgb(185, 28, 28);
+      border-radius: inherit;
+    }
+    &:checked {
+      border: 1px solid #1a1a1a;
+      &::before {
+        display: block;
+      }
+    }
+  }
+}
+.input__label {
+  display: grid;
+
+  & input {
+    height: 40px;
+    padding: 3px 10px;
+  }
+}

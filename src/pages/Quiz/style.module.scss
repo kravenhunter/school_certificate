@@ -1,0 +1,9 @@
+.quiz__wrapper {
+  width: min(100vw, 1024px);
+  padding: 10px;
+  &__message {
+    display: grid;
+    row-gap: 20px;
+    justify-items: center;
+  }
+}

@@ -1,0 +1,15 @@
+.result {
+  width: 100%;
+  padding: 50px 0 30px;
+  & ul {
+    display: grid;
+    row-gap: 1rem;
+  }
+  &__answer {
+    padding-left: 20px;
+    display: flex;
+
+    column-gap: 1rem;
+    align-items: center;
+  }
+}
