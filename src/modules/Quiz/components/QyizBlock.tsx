@@ -1,21 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { quizActions } from "@/modules";
+import { Timer, quizActions } from "@/modules";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { ChackBox, InputField } from "@components";
 import cls from "classnames";
 import { Fragment, useCallback, useEffect, useState } from "react";
-import { Timer } from "./Timer";
 import style from "./style.module.scss";
 
 //Компонент  ответа на вопрос
 export const QuizBlock = () => {
   const [answer, setAnswer] = useState("");
 
-  const { selectCurrentQuizList, selectCurrentQuizIndex } = quizActions.selectors;
-  const { answerToQuizItem, getCurrentQuizIndex, changeQuizFlag } = quizActions.actions;
+  const { selectTimer, selectCurrentQuizList, selectCurrentQuizIndex } = quizActions.selectors;
+  const { answerToQuizItem, getCurrentQuizIndex, changeQuizFlag, getQuizTimer } = quizActions.actions;
   const [isDisableButton, setIsDisableButton] = useState(true);
   const quizList = useAppSelector((state) => selectCurrentQuizList(state));
-
+  const getTime = useAppSelector((state) => selectTimer(state));
   const currentQuizIndex = useAppSelector((state) => selectCurrentQuizIndex(state));
 
   const dispatch = useAppDispatch();
@@ -50,14 +49,15 @@ export const QuizBlock = () => {
   }, [currentQuizIndex, dispatch, getCurrentQuizIndex]);
   useEffect(() => {
     if (!answer.length || answer.length === 73) {
-      console.log(answer.length);
-      console.log(answer.length === 73);
-
       setIsDisableButton(true);
     } else {
       setIsDisableButton(false);
     }
   }, [answer.length]);
+  useEffect(() => {
+    dispatch(getQuizTimer());
+  }, [dispatch, getQuizTimer]);
+
   return (
     <>
       {quizList.length && (
@@ -65,7 +65,7 @@ export const QuizBlock = () => {
           <div className={style["quiz__title"]}>
             <h1>Тестирование</h1>
 
-            <Timer />
+            <Timer time={getTime} />
           </div>
           <div className={cls(style["quiz__count"])}>
             {quizList.map((el, indx) => (

@@ -286,6 +286,7 @@ export const asyncReducer = (create: ReducerCreators<IQuizState>) => ({
     async function (__, { rejectWithValue }) {
       try {
         const result = await ApiServices.getQuizTimer();
+        console.log(result);
 
         return result;
       } catch (error) {

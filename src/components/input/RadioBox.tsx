@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
-type TypeInput = "text" | "checkbox" | "radio" | "number" | "date";
 
 interface IProps {
   nameField: string;

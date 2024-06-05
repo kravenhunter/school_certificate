@@ -7,13 +7,17 @@ import { useNavigate } from "react-router";
 
 export const HomePage = () => {
   const navigate = useNavigate();
-  const { changeQuizFlag, startNewQuiz, getQuizFlag } = quizActions.actions;
+  const { changeQuizFlag, startNewQuiz, getQuizFlag, getQuizTimer } = quizActions.actions;
   const { isFinish } = quizActions.selectors;
   const getFlag = useAppSelector((state) => isFinish(state));
   const dispatch = useAppDispatch();
   const startHandler = () => {
     dispatch(changeQuizFlag(false));
     dispatch(startNewQuiz());
+    navigate("/quiz");
+  };
+  const continueTest = () => {
+    dispatch(getQuizTimer());
     navigate("/quiz");
   };
   useEffect(() => {
@@ -31,7 +35,7 @@ export const HomePage = () => {
       </button>
       {!getFlag && (
         <button
-          onClick={() => navigate("/quiz")}
+          onClick={continueTest}
           className='text-2xl font-medium px-4 py-3 rounded-md  bg-slate-600 text-white hover:bg-slate-500 '>
           Продолжить тестирование
         </button>

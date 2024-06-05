@@ -19,16 +19,22 @@ const convertTime = (time: string) => {
   };
 };
 //Компонент таймера
-export const Timer = () => {
+export const Timer = ({ time }: { time: string }) => {
   const { selectTimer, selectCurrentQuizIndex, selectCurrentQuizList } = quizActions.selectors;
-  const { saveQuizTimer } = quizActions.actions;
+  const { saveQuizTimer, getQuizTimer } = quizActions.actions;
 
   const dispatch = useAppDispatch();
-  const getTime = useAppSelector((state) => selectTimer(state));
+  // const getTime = useAppSelector((state) => selectTimer(state));
   const quizList = useAppSelector((state) => selectCurrentQuizList(state));
   const currentQuizIndex = useAppSelector((state) => selectCurrentQuizIndex(state));
 
-  const [timer] = useTimer(getTime === "00:00" ? initTimer : convertTime(getTime));
+  // useEffect(() => {
+  //   if (getTime === "00:00") {
+  //     dispatch(getQuizTimer());
+  //   }
+  // }, []);
+
+  const [timer] = useTimer(convertTime(time));
 
   useEffect(() => {
     if (currentQuizIndex < quizList.length) {

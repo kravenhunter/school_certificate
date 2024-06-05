@@ -1,4 +1,4 @@
-import { IQuiz } from "@modules";
+import { IQuiz } from "@/core";
 
 function shuffle(args: IQuiz[]) {
   let start = args.length;
