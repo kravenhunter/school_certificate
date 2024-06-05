@@ -14,6 +14,7 @@ export const asyncReducer = (create: ReducerCreators<IQuizState>) => ({
     async function (__, { rejectWithValue }) {
       try {
         const result = await ApiServices.getFullQuizList();
+
         return result;
       } catch (error) {
         return rejectWithValue((error as Error).message);
@@ -71,6 +72,24 @@ export const asyncReducer = (create: ReducerCreators<IQuizState>) => ({
       } catch (error) {
         return rejectWithValue((error as Error).message);
       }
+    },
+    {
+      pending: (state) => {
+        state.loading = true;
+      },
+      fulfilled: (state, action) => {
+        state.loading = false;
+        state.currentQuizItem = action.payload;
+      },
+      rejected: (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      },
+    },
+  ),
+  clearCurrentItem: create.asyncThunk(
+    function (__) {
+      return null;
     },
     {
       pending: (state) => {
@@ -328,32 +347,6 @@ export const asyncReducer = (create: ReducerCreators<IQuizState>) => ({
       fulfilled: (state, action) => {
         state.loading = false;
         state.is_finish = action.payload.flag;
-      },
-      rejected: (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      },
-    },
-  ),
-  getTestIndex: create.asyncThunk(
-    async function (__, { rejectWithValue }) {
-      try {
-        const result = await ApiServices.testGetAction();
-
-        if (typeof result === "string") throw new Error(result);
-
-        return { key: result.index };
-      } catch (error) {
-        return rejectWithValue((error as Error).message);
-      }
-    },
-    {
-      pending: (state) => {
-        state.loading = true;
-      },
-      fulfilled: (state, action) => {
-        state.loading = false;
-        state.currentQuizIndexItem = action.payload.key;
       },
       rejected: (state, action) => {
         state.loading = false;

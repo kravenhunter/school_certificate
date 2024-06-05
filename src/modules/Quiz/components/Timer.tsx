@@ -18,6 +18,7 @@ const convertTime = (time: string) => {
     seconds: +timeConvert[1],
   };
 };
+//Компонент таймера
 export const Timer = () => {
   const { selectTimer, selectCurrentQuizIndex, selectCurrentQuizList } = quizActions.selectors;
   const { saveQuizTimer } = quizActions.actions;

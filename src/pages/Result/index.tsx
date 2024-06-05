@@ -1,10 +1,10 @@
 import { quizActions, QuizList } from "@/modules";
 import { useAppDispatch, useAppSelector } from "@/store";
-
-// import CorrectIcon from "@assets/images/correct.svg";//
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from "./style.module.scss";
+
+//Страница результатов тестирования
 export const ResultPage = () => {
   const { selectTimer, selectCurrentQuizList } = quizActions.selectors;
   const { getCurrentQuizList, getQuizTimer } = quizActions.actions;

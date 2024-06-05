@@ -10,7 +10,7 @@ interface IProps {
   label: string;
   type: TypeInput;
   isCheck?: boolean;
-  handler: (variand: string) => void;
+  handler: (variant: string, type: "single" | "multiple") => void;
 }
 
 export const ChackBox = React.memo(({ nameField, label, value, type, isCheck, handler }: IProps) => {
@@ -18,7 +18,6 @@ export const ChackBox = React.memo(({ nameField, label, value, type, isCheck, ha
   const inputHandler = (inputValue: string) => {
     setTimeout(() => {
       setValue(inputValue);
-      handler(inputValue);
     }, 300);
   };
   const InputFiled = () => {
@@ -39,7 +38,13 @@ export const ChackBox = React.memo(({ nameField, label, value, type, isCheck, ha
       default:
         return (
           <label className={cls(style["checkbox__label"])}>
-            <input type={type} name={nameField} value={value} checked={isCheck} onChange={() => handler(label)} />
+            <input
+              type={type}
+              name={nameField}
+              value={value}
+              checked={isCheck}
+              onChange={() => handler(label, "single")}
+            />
             {label}
           </label>
         );

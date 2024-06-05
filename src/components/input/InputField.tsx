@@ -4,6 +4,7 @@ import React from "react";
 import style from "./style.module.scss";
 type TypeInput = "text" | "checkbox" | "radio" | "number" | "date";
 interface IProps {
+  classField?: string;
   nameField: string;
   value?: string;
   label: string;
@@ -12,19 +13,21 @@ interface IProps {
   handler: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const InputField = React.memo(({ nameField, value, label, type, handler }: IProps) => {
-  console.log(value);
+export const InputField = React.memo(
+  ({ classField = "field__label", nameField, value, label, type, handler }: IProps) => {
+    console.log(value);
 
-  return (
-    <label>
-      {label}
-      <input
-        type={type}
-        className={cls(style["input__label"], "border-2")}
-        defaultValue={value}
-        name={nameField}
-        onChange={handler}
-      />
-    </label>
-  );
-});
+    return (
+      <label className={classField}>
+        {label}
+        <input
+          type={type}
+          className={cls(style["input__label"], "border-2")}
+          value={value}
+          name={nameField}
+          onChange={handler}
+        />
+      </label>
+    );
+  },
+);

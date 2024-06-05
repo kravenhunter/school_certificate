@@ -26,7 +26,6 @@ export const DefaultLayout = () => {
     if (quizStatus) {
       dispatch(getQuizFlag());
     }
-    console.log("getIsFinishStatus", quizStatus);
   }, [dispatch, getQuizFlag, quizStatus]);
   return (
     <div className={cls("min-h-screen", locationPath.pathname !== "/manage" && "grid place-content-center")}>

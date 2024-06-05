@@ -1,4 +1,5 @@
 .quiz {
+  min-width: 350px;
   display: grid;
   row-gap: 1.2rem;
   &__title {
@@ -15,8 +16,10 @@
   }
   &__count {
     display: flex;
+    flex-wrap: wrap;
+
     width: 100%;
-    column-gap: 3px;
+    gap: 3px;
     & span {
       width: 55px;
       height: 9px;
@@ -27,11 +30,27 @@
     display: grid;
     row-gap: 0.5rem;
     font-weight: 500;
+    & label {
+      display: flex;
+      align-items: center;
+    }
     & input {
       margin-right: 15px;
     }
     & button {
       margin-top: 20px;
+    }
+    &__text label {
+      display: grid;
+      & input {
+        width: 600px;
+      }
+      & textarea {
+        resize: none;
+        width: min(100%, 700px);
+        height: 200px;
+        overflow: auto;
+      }
     }
   }
   & p {

@@ -1,20 +1,12 @@
 import { useEffect, useState } from "react";
-//import { useAppDispatch, useAppSelector } from "@/store";
 
-// const initTimer = {
-//     minutes: 0,
-//     seconds: 0,
-//   };
-//   interface IProps{
-//       timer_init: ITemer
-//     }
 interface ITemer {
   minutes: number;
   seconds: number;
 }
+//Timer-hook
 export const useTimer = ({ minutes, seconds }: ITemer) => {
   const [timer, setTimer] = useState<ITemer>({ minutes, seconds });
-  // const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const timerId = setInterval(() => {

@@ -6,7 +6,7 @@ declare global {
 }
 
 const IS_SERVER = typeof window === "undefined";
-
+//Утилита сохранения и избятия данных из loacl-storage
 export function useLocalStorage<T>(key: string): [() => T | null, (value: T) => void, () => void] {
   //установили флаг что есть какойто объект  init
 

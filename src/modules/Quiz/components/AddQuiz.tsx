@@ -1,10 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { ButtonItem, InputField, RadioBox } from "@components";
-
-// import CorrectIcon from "@assets/images/correct.svg";//
-import React, { useCallback, useEffect, useState } from "react";
-
 import { IQuiz } from "@/core";
+import { ButtonItem, InputField, RadioBox } from "@components";
+import React, { useCallback, useEffect, useState } from "react";
 import style from "./style.module.scss";
 
 const initItem: Omit<IQuiz, "id"> = {
@@ -19,9 +15,11 @@ const initItem: Omit<IQuiz, "id"> = {
 interface IProps {
   item: IQuiz | null;
   handler: (quiz_item: Omit<IQuiz, "id">) => void;
+  clearhandler: () => void;
 }
-export const AddQuizForm = React.memo(({ item, handler }: IProps) => {
-  const [newQuizItem, setNewitem] = useState<Omit<IQuiz, "id">>(item ?? initItem);
+//Форма добавления
+export const AddQuizForm = React.memo(({ item, handler, clearhandler }: IProps) => {
+  const [newQuizItem, setNewitem] = useState<Omit<IQuiz, "id">>(initItem);
   const [variant, setVariant] = useState("");
 
   const inputsHandler = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,12 +46,12 @@ export const AddQuizForm = React.memo(({ item, handler }: IProps) => {
         break;
       case "question":
         setNewitem((prev) => {
-          return { ...prev, question: event.target.value.trim() };
+          return { ...prev, question: event.target.value };
         });
         break;
       case "answer":
         setNewitem((prev) => {
-          return { ...prev, correct_result: event.target.value.trim() };
+          return { ...prev, correct_result: event.target.value };
         });
         break;
       case "variants":
@@ -79,13 +77,18 @@ export const AddQuizForm = React.memo(({ item, handler }: IProps) => {
     [],
   );
   const submitHandler = () => {
-    handler(newQuizItem);
+    newQuizItem.question.length && handler(newQuizItem);
   };
   const clearFromHandler = () => {
     setNewitem(initItem);
+    clearhandler();
   };
   useEffect(() => {
-    item && setNewitem(item);
+    if (item) {
+      setNewitem(item);
+    }
+
+    console.log(item?.question);
   }, [item]);
   return (
     <form className={style["quiz__form"]}>
@@ -139,6 +142,27 @@ export const AddQuizForm = React.memo(({ item, handler }: IProps) => {
         </li>
       </ul>
       {newQuizItem.single_choose && (
+        <>
+          <div className={style["quiz__form__variants"]}>
+            <InputField
+              type='text'
+              label='Вариант ответа'
+              value={variant}
+              nameField='variants'
+              handler={inputsHandler}
+            />
+            <ButtonItem label='Добавить вариант' nameField='variants' handler={addVariants} />
+          </div>
+          <p className='font-medium'>Добавленные варианты:</p>
+          <ul className='grid gap-2'>
+            {newQuizItem?.variants.length > 0 && newQuizItem.variants.map((el, inx) => <li key={inx}>{el}</li>)}
+            <li>
+              <ButtonItem label='Очистить' nameField='clear' handler={clearVariantsHandler} />
+            </li>
+          </ul>
+        </>
+      )}
+      {newQuizItem.multiple_choose && (
         <>
           <div className={style["quiz__form__variants"]}>
             <InputField

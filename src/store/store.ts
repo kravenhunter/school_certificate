@@ -1,12 +1,11 @@
 // import counterReducer from "@/modules/Test/testSlice";
-import { CounterReduce, QuizReduce } from "@/modules";
+import { QuizReduce } from "@/modules";
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
   // здесь регистрируем все нажи редюсеры
   reducer: {
     quiz: QuizReduce,
-    counter: CounterReduce,
   },
   devTools: process.env.NODE_ENV !== "production",
 });

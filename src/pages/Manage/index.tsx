@@ -1,45 +1,34 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IQuiz } from "@/core";
 import { AddQuizForm, quizActions } from "@/modules";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from "./style.module.scss";
 
-const initItem: IQuiz = {
-  id: "",
-  correct_result: "",
-  question: "",
-  variants: [],
-  single_choose: true,
-  multiple_choose: false,
-  short_anwer: false,
-  long_anwer: false,
-};
+// Страница управления вопросами
+
 export const ManagePanel = () => {
   const { selectFullList, selectCurrentQuizItem } = quizActions.selectors;
-  const { getCurrentQuizList, addNewQuiz, getCurrentQuizItem, updateCurrentQuiz } = quizActions.actions;
+  const { fetchData, clearCurrentItem, addNewQuiz, getCurrentQuizItem, updateCurrentQuiz } = quizActions.actions;
   const quizList = useAppSelector((state) => selectFullList(state));
   const currentQuizItem = useAppSelector((state) => selectCurrentQuizItem(state));
 
-  const [newQuizItem, setNewitem] = useState<IQuiz>(currentQuizItem ?? initItem);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    !quizList.length && dispatch(getCurrentQuizList());
-  }, [dispatch, getCurrentQuizList, quizList.length]);
   const sendHandler = (quiz_item: Omit<IQuiz, "id">) => {
-    !currentQuizItem && dispatch(addNewQuiz(quiz_item));
-    currentQuizItem && dispatch(updateCurrentQuiz({ ...quiz_item, id: currentQuizItem?.id }));
+    if (!currentQuizItem) {
+      dispatch(addNewQuiz(quiz_item));
+    } else {
+      dispatch(updateCurrentQuiz({ ...quiz_item, id: currentQuizItem?.id }));
+    }
   };
-  const clickHandler = (title: string) => {
-    console.log(title);
+  const clickHandler = (title: string) => dispatch(getCurrentQuizItem(title));
+  const clearForm = () => dispatch(clearCurrentItem());
 
-    dispatch(getCurrentQuizItem(title));
-  };
   useEffect(() => {
-    console.log(currentQuizItem);
-  }, [currentQuizItem]);
+    !quizList.length && dispatch(fetchData());
+  }, [dispatch, fetchData, quizList.length]);
+
   return (
     <div className={style["manage"]}>
       <div className={style["manage__block"]}>
@@ -54,7 +43,9 @@ export const ManagePanel = () => {
               </li>
             ))}
         </ul>
-        <AddQuizForm handler={sendHandler} item={currentQuizItem} />
+        <div className={style["manage__block__form"]}>
+          <AddQuizForm handler={sendHandler} clearhandler={clearForm} item={currentQuizItem} />
+        </div>
       </div>
       <div className='flex justify-center'>
         <Link to={"/"} className='bg-teal-600 rounded-md px-4 py-3 text-white hover:bg-teal-500' replace>

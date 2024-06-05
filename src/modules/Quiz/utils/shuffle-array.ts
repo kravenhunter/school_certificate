@@ -10,7 +10,7 @@ function shuffle(args: IQuiz[]) {
   }
   return args;
 }
-
+//Утилита рандомно  мешает массив вопросов
 export function shuffleArray(args: IQuiz[]) {
   let result: IQuiz[] = [];
   for (let index = 0; index < 3; index++) {

@@ -1,6 +1,4 @@
-// import { PayloadAction, buildCreateSlice, nanoid, asyncThunkCreator  } from "@reduxjs/toolkit";
 import { asyncThunkCreator, buildCreateSlice } from "@reduxjs/toolkit";
-
 import { asyncReducer } from "./quiz-reducer";
 import { IQuizState } from "./quiz-types";
 

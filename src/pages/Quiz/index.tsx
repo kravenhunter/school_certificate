@@ -1,20 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { quizActions } from "@/modules";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { QuizBlock } from "@modules";
-//import { useLocation, useNavigate } from "react-router";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from "./style.module.scss";
 
+//Страница Тестирования
 export const QuizPage = () => {
-  // const navigate = useNavigate();
-  // const locationPath = useLocation();
-
   const { selectCurrentQuizList, selectCurrentQuizIndex } = quizActions.selectors;
   const { getCurrentQuizList } = quizActions.actions;
 
-  // const getIsFinishStatus = useAppSelector((state) => isFinish(state));
   const currentQuizIndex = useAppSelector((state) => selectCurrentQuizIndex(state));
   const quizList = useAppSelector((state) => selectCurrentQuizList(state));
   const dispatch = useAppDispatch();
@@ -24,17 +19,6 @@ export const QuizPage = () => {
     }
   }, [dispatch, getCurrentQuizList, quizList.length]);
 
-  useEffect(() => {
-    console.log(quizList);
-  }, [quizList]);
-  // useEffect(() => {
-  //   if (getIsFinishStatus && locationPath.pathname === "/quiz") {
-  //     console.log(getIsFinishStatus);
-  //     setTimeout(() => {
-  //       navigate("/");
-  //     }, 1000);
-  //   }
-  // }, [getIsFinishStatus, locationPath.pathname, navigate]);
   return (
     <div className={style["quiz__wrapper"]}>
       {currentQuizIndex < quizList.length ? (
