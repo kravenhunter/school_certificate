@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { quizActions, QuizList } from "@/modules";
-
 import { useAppDispatch, useAppSelector } from "@/store";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { quizActions, useTimer } from "@/modules";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { QuizBlock } from "@modules";
@@ -10,7 +9,7 @@ import style from "./style.module.scss";
 export const QuizPage = () => {
   const { selectCurrentQuizList, selectCurrentQuizIndex } = quizActions.selectors;
   const { getCurrentQuizList } = quizActions.actions;
-  const [countDown, flag, initData, changeFlag] = useTimer();
+  const [, , , changeFlag] = useTimer();
 
   const currentQuizIndex = useAppSelector((state) => selectCurrentQuizIndex(state));
   const quizList = useAppSelector((state) => selectCurrentQuizList(state));

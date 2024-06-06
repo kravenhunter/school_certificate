@@ -1,10 +1,3 @@
-declare global {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-  interface WindowEventMap {
-    "local-storage": CustomEvent;
-  }
-}
-
 const IS_SERVER = typeof window === "undefined";
 //Утилита сохранения и избятия данных из loacl-storage
 export function useLocalStorage<T>(key: string): [() => T | null, (value: T) => void, () => void] {
