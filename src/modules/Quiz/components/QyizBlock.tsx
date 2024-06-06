@@ -10,11 +10,11 @@ import style from "./style.module.scss";
 export const QuizBlock = () => {
   const [answer, setAnswer] = useState("");
 
-  const { selectTimer, selectCurrentQuizList, selectCurrentQuizIndex } = quizActions.selectors;
-  const { answerToQuizItem, getCurrentQuizIndex, changeQuizFlag, getQuizTimer } = quizActions.actions;
+  const { selectCurrentQuizList, selectCurrentQuizIndex } = quizActions.selectors;
+  const { answerToQuizItem, getCurrentQuizIndex, changeQuizFlag } = quizActions.actions;
   const [isDisableButton, setIsDisableButton] = useState(true);
   const quizList = useAppSelector((state) => selectCurrentQuizList(state));
-  const getTime = useAppSelector((state) => selectTimer(state));
+
   const currentQuizIndex = useAppSelector((state) => selectCurrentQuizIndex(state));
 
   const dispatch = useAppDispatch();
@@ -54,9 +54,6 @@ export const QuizBlock = () => {
       setIsDisableButton(false);
     }
   }, [answer.length]);
-  useEffect(() => {
-    dispatch(getQuizTimer());
-  }, [dispatch, getQuizTimer]);
 
   return (
     <>
@@ -65,7 +62,7 @@ export const QuizBlock = () => {
           <div className={style["quiz__title"]}>
             <h1>Тестирование</h1>
 
-            <Timer time={getTime} />
+            <Timer />
           </div>
           <div className={cls(style["quiz__count"])}>
             {quizList.map((el, indx) => (

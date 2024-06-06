@@ -11,7 +11,7 @@ const initialState: IQuizState = {
   error: null,
   currentQuizIndexItem: 0,
   currentQuizItem: null,
-  currentTime: "00:00",
+  currentTime: "",
   full_list: [],
   current_quiz: [],
   is_finish: true,
@@ -28,6 +28,7 @@ const quizSlice = createSlice({
   selectors: {
     selectFullList: (state) => state.full_list,
     selectTimer: (state) => state.currentTime,
+    selectIsLoadingStatus: (state) => state.loading,
     selectCurrentQuizList: (state) => state.current_quiz,
     selectCurrentQuizItem: (state) => state.currentQuizItem,
     selectCurrentQuizIndex: (state) => state.currentQuizIndexItem,

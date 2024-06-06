@@ -10,3 +10,8 @@ export interface IQuizState {
   current_quiz: IQuiz[];
   is_finish: boolean;
 }
+
+export interface ITimer {
+  minutes: number;
+  seconds: number;
+}

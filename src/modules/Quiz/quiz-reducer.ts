@@ -197,6 +197,7 @@ export const asyncReducer = (create: ReducerCreators<IQuizState>) => ({
         state.current_quiz = action.payload;
         state.currentQuizItem = action.payload[0];
         state.currentQuizIndexItem = 0;
+        state.currentTime = "00:00";
       },
       rejected: (state, action) => {
         state.loading = false;

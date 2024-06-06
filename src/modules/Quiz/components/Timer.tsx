@@ -1,50 +1,28 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import { convertTimeTString, convertTimeToObject, quizActions } from "@/modules";
+import { useCountdown } from "@/modules/Quiz/hooks/time-record";
 import { useAppDispatch, useAppSelector } from "@/store";
-
-import { quizActions } from "@/modules";
-import { useTimer } from "@modules";
 import cls from "classnames";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
+
 import style from "./style.module.scss";
 
-const initTimer = {
-  minutes: 0,
-  seconds: 0,
-};
-const convertTime = (time: string) => {
-  const timeConvert = time.split(":");
-  return {
-    minutes: +timeConvert[0],
-    seconds: +timeConvert[1],
-  };
-};
-//Компонент таймера
-export const Timer = ({ time }: { time: string }) => {
-  const { selectTimer, selectCurrentQuizIndex, selectCurrentQuizList } = quizActions.selectors;
-  const { saveQuizTimer, getQuizTimer } = quizActions.actions;
+export const Timer: FC = () => {
+  const { selectTimer } = quizActions.selectors;
+  const { getQuizTimer, saveQuizTimer } = quizActions.actions;
+  const getTime = useAppSelector((state) => selectTimer(state));
 
+  const [countDown, flag, initData, changeFlag] = useCountdown();
   const dispatch = useAppDispatch();
-  // const getTime = useAppSelector((state) => selectTimer(state));
-  const quizList = useAppSelector((state) => selectCurrentQuizList(state));
-  const currentQuizIndex = useAppSelector((state) => selectCurrentQuizIndex(state));
-
-  // useEffect(() => {
-  //   if (getTime === "00:00") {
-  //     dispatch(getQuizTimer());
-  //   }
-  // }, []);
-
-  const [timer] = useTimer(convertTime(time));
 
   useEffect(() => {
-    if (currentQuizIndex < quizList.length) {
-      dispatch(saveQuizTimer(timer));
-    }
-  }, [currentQuizIndex, dispatch, quizList.length, saveQuizTimer, timer]);
+    getTime === "" && dispatch(getQuizTimer());
+    getTime !== "" && !flag && (initData(convertTimeToObject(getTime)), changeFlag(true));
+    flag && dispatch(saveQuizTimer(convertTimeTString(countDown)));
+  }, [changeFlag, countDown, dispatch, flag, getQuizTimer, getTime, initData, saveQuizTimer]);
 
   return (
     <div className={cls(style["quiz__title__time"], "h-8 border-2 border-gray-400  place-content-center px-3")}>
-      {timer}
+      {convertTimeTString(countDown)}
     </div>
   );
 };

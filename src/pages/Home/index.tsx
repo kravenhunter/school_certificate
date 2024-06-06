@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 
 export const HomePage = () => {
   const navigate = useNavigate();
-  const { changeQuizFlag, startNewQuiz, getQuizFlag, getQuizTimer } = quizActions.actions;
+  const { changeQuizFlag, startNewQuiz, getQuizFlag } = quizActions.actions;
   const { isFinish } = quizActions.selectors;
   const getFlag = useAppSelector((state) => isFinish(state));
   const dispatch = useAppDispatch();
@@ -16,10 +16,7 @@ export const HomePage = () => {
     dispatch(startNewQuiz());
     navigate("/quiz");
   };
-  const continueTest = () => {
-    dispatch(getQuizTimer());
-    navigate("/quiz");
-  };
+
   useEffect(() => {
     dispatch(getQuizFlag());
   }, [dispatch, getQuizFlag]);
@@ -35,7 +32,7 @@ export const HomePage = () => {
       </button>
       {!getFlag && (
         <button
-          onClick={continueTest}
+          onClick={() => navigate("/quiz")}
           className='text-2xl font-medium px-4 py-3 rounded-md  bg-slate-600 text-white hover:bg-slate-500 '>
           Продолжить тестирование
         </button>

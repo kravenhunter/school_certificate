@@ -96,10 +96,12 @@ export class ApiServices {
   // Количество вопросов всегда  16
   static async startNewQuiz(): Promise<IQuiz[]> {
     const [_, setValue] = useLocalStorage<IQuizStore>("current-quiz-storage");
+    const [__, setTimeValue] = useLocalStorage<string>("current-quiz-timer");
 
     const getList = await this.getFullQuizList();
     const resultShuffle = shuffleArray(getList).slice(0, 16);
     setValue({ current_index: 0, current__quiz: resultShuffle });
+    setTimeValue("00:00");
     return gePromise(resultShuffle);
   }
   //Получаем текущий  индекс вопроса  для восстановление из истории
@@ -107,8 +109,6 @@ export class ApiServices {
     const [readValue] = useLocalStorage<IQuizStore>("current-quiz-storage");
     const getList = readValue();
     if (getList !== null) {
-      console.log(getList);
-
       //const getCurrentQuizItem = getList.current__quiz.find((el) => el.id === body.id);
       return gePromise({
         current_index: getList.current_index,
