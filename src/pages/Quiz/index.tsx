@@ -1,4 +1,5 @@
-import { quizActions } from "@/modules";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { quizActions, useTimer } from "@/modules";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { QuizBlock } from "@modules";
 import { useEffect } from "react";
@@ -9,16 +10,23 @@ import style from "./style.module.scss";
 export const QuizPage = () => {
   const { selectCurrentQuizList, selectCurrentQuizIndex } = quizActions.selectors;
   const { getCurrentQuizList } = quizActions.actions;
+  const [countDown, flag, initData, changeFlag] = useTimer();
 
   const currentQuizIndex = useAppSelector((state) => selectCurrentQuizIndex(state));
   const quizList = useAppSelector((state) => selectCurrentQuizList(state));
   const dispatch = useAppDispatch();
+
+  //Загружаем списко вопросов
   useEffect(() => {
     if (!quizList.length) {
       dispatch(getCurrentQuizList());
     }
   }, [dispatch, getCurrentQuizList, quizList.length]);
 
+  //Очищаем setInterval
+  useEffect(() => {
+    currentQuizIndex === quizList.length - 1 && changeFlag(false);
+  }, [changeFlag, currentQuizIndex, quizList.length]);
   return (
     <div className={style["quiz__wrapper"]}>
       {currentQuizIndex < quizList.length ? (

@@ -5,7 +5,7 @@ const init: ITimer = {
   minutes: 0,
   seconds: 0,
 };
-export const useCountdown = () => {
+export const useTimer = () => {
   const [countDown, setCountDown] = useState<ITimer>(init);
   const [flag, setFlag] = useState(false);
   const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);

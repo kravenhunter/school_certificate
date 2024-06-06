@@ -1,5 +1,4 @@
-import { convertTimeTString, convertTimeToObject, quizActions } from "@/modules";
-import { useCountdown } from "@/modules/Quiz/hooks/time-record";
+import { convertTimeTString, convertTimeToObject, quizActions, useTimer } from "@/modules";
 import { useAppDispatch, useAppSelector } from "@/store";
 import cls from "classnames";
 import { FC, useEffect } from "react";
@@ -11,7 +10,7 @@ export const Timer: FC = () => {
   const { getQuizTimer, saveQuizTimer } = quizActions.actions;
   const getTime = useAppSelector((state) => selectTimer(state));
 
-  const [countDown, flag, initData, changeFlag] = useCountdown();
+  const [countDown, flag, initData, changeFlag] = useTimer();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
