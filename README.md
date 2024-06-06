@@ -1,30 +1,49 @@
-# React + TypeScript + Vite
+# Описание проекта
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Тестовое задание: Приложение по тестирования
+Функционал приложения:
 
-Currently, two official plugins are available:
+-   Возможность отвечать на различного рода вопросы
+-   Возможность начать или продолжить тестирование-
+-   Получить список выполненных ответов
+-   Добавление и редактирование вопросов
+-   Добавлиние вопросов по типам: единый выбор, множественный выбор, короткий ответ, развернутый ответ
+-   Список вопросов сохраняется в local-storage
+-   Генерируется и перемешивается новый список вопросов для тестирования
+-   Включается таймер , который сохраняется в local-storage
+-   Результаты тестирования сохраняютсяв local-storage
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Роутинг страниц:
 
-## Expanding the ESLint configuration
+-   "/" Главная страницы
+-   "/quiz" Страница тестирования
+-   "/result" Страница результатов тестирования
+-   "/manage" Панель управления вопросами (добавления, редактирования)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Все поставленные цели выполненными.
 
-- Configure the top-level `parserOptions` property like this:
+## Использование
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Для начала работы с приложением необходимо:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+1. Клонировать репозиторий `git clone <ссылка-репозитория>`
+2. Перейти в папку с клиентом `cd school_certification`
+3. Установить все зависимости для клиента `npm install`
+4. Запустить сервер и клиент с помощью команда `npm run dev`
+
+## Развертывание
+
+Для начала работы с приложением необходимо:
+
+1. Сборка проекта `npm run build`
+2. Предпросмотр приложения `npm run preview`
+
+## Stack
+
+-   React 18 + React-router
+-   Typescript
+-   Redux-toolkit
+-   Tailwindcss
+-   Scss
+-   Classnames
+-   Eslint + Prietter
