@@ -74,6 +74,11 @@ export const QuizBlock = () => {
 
           <h2 className='quiz__question'>{quizList[currentQuizIndex].question}</h2>
           <form className={style["quiz__checkboxes"]}>
+            {quizList[currentQuizIndex].multiple_choose && <p className='font-light pb-2'>Множественный выбор</p>}
+            {quizList[currentQuizIndex].single_choose && <p className='font-light pb-2'>Единый выбор</p>}
+            {quizList[currentQuizIndex].short_anwer && <p className='font-light pb-2'>Коротикий ответ</p>}
+            {quizList[currentQuizIndex].long_anwer && <p className='font-light pb-2'>Развернутый ответ</p>}
+
             {quizList[currentQuizIndex].single_choose &&
               quizList[currentQuizIndex].variants?.map((el, indx) => (
                 <Fragment key={el + indx}>
@@ -82,22 +87,23 @@ export const QuizBlock = () => {
                     isCheck={el === answer}
                     label={el}
                     type='checkbox'
-                    handler={chooseHandler}
+                    handler={() => chooseHandler(el, "single")}
                   />
                 </Fragment>
               ))}
+
             {quizList[currentQuizIndex].multiple_choose &&
               quizList[currentQuizIndex].variants?.map((el, indx) => (
-                <label key={el + indx}>
-                  <input
-                    onChange={() => chooseHandler(el, "multiple")}
+                <Fragment key={el + indx}>
+                  <ChackBox
+                    nameField={indx.toString()}
+                    label={el}
                     type='checkbox'
-                    className='w-[15px] h-[15px]'
-                    name={indx.toString()}
+                    handler={() => chooseHandler(el, "multiple")}
                   />
-                  {el}
-                </label>
+                </Fragment>
               ))}
+
             {quizList[currentQuizIndex].short_anwer && (
               <div className={style["quiz__checkboxes__text"]}>
                 <InputField
